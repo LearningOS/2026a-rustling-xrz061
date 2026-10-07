@@ -1,16 +1,30 @@
 /*
-	sort
-	This problem requires you to implement a sorting algorithm
-	you can use bubble sorting, insertion sorting, heap sorting, etc.
+    sort
+    This problem requires you to implement a sorting algorithm
+    you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM NOT DONE
 
-fn sort<T>(array: &mut [T]){
-	//TODO
+fn sort<T: Ord>(array: &mut [T]) {
+    for i in 1..array.len() {
+        let mut j = i;
+        while j > 0 && array[j] < array[j - 1] {
+            array.swap(j, j - 1);
+            j -= 1;
+        }
+    }
 }
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn sort_empty_duplicate_and_owned_values() {
+        let mut empty: [i32; 0] = [];
+        sort(&mut empty);
+        let mut values = vec![String::from("b"), String::from("a"), String::from("a")];
+        sort(&mut values);
+        assert_eq!(values, ["a", "a", "b"]);
+    }
 
     #[test]
     fn test_sort_1() {
@@ -18,13 +32,13 @@ mod tests {
         sort(&mut vec);
         assert_eq!(vec, vec![19, 37, 46, 57, 64, 73, 75, 91]);
     }
-	#[test]
+    #[test]
     fn test_sort_2() {
         let mut vec = vec![1];
         sort(&mut vec);
         assert_eq!(vec, vec![1]);
     }
-	#[test]
+    #[test]
     fn test_sort_3() {
         let mut vec = vec![99, 88, 77, 66, 55, 44, 33, 22, 11];
         sort(&mut vec);
